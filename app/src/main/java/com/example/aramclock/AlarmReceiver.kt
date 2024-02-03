@@ -8,16 +8,24 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 
+// AlarmReceiver sınıfı, bir alarm tetiklendiğinde çalışan bir BroadcastReceiver sınıfıdır.
 class AlarmReceiver : BroadcastReceiver() {
+
+    // onReceive fonksiyonu, BroadcastReceiver sınıfının ana işlevini gerçekleştirir.
     override fun onReceive(context: Context, intent: Intent) {
-        // Bildirim oluştur ve göster
+
+        // Alarm tetiklendiğinde bildirim oluşturan createNotification fonksiyonunu çağırır.
         createNotification(context, "Alarm Clock", "Kurduğunuz alarmın süresi doldu!")
     }
 
+    // createNotification fonksiyonu, bildirim oluşturur ve gösterir.
     private fun createNotification(context: Context, title: String, content: String) {
+
+        // NotificationManager'ı al
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        // Android 8.0 ve üzeri için bildirim kanalı oluştur
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "alarm_channel_id"
             val channel = NotificationChannel(
@@ -35,7 +43,7 @@ class AlarmReceiver : BroadcastReceiver() {
             .setContentText(content)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-        // Bildirim göster
-        notificationManager.notify(1,notificationBuilder.build())
+        // Bildirimi göster
+        notificationManager.notify(1, notificationBuilder.build())
     }
 }

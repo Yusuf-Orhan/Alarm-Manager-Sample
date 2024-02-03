@@ -12,6 +12,6 @@ class AlarmManagerExample {
         val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         // AlarmManager ile alarmın tetiklenme zamanını ve tipini ayarlıyoruz.
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 60000,pendingIntent)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time,pendingIntent)
     }
 }
