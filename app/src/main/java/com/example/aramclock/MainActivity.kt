@@ -12,10 +12,7 @@ import java.util.Calendar
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
-
-    private val notificationAlarmScheduler by lazy {
-        NotificationAlarmScheduler(this)
-    }
+    val alarmManagerExample = AlarmManagerExample()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,19 +38,16 @@ class MainActivity : AppCompatActivity() {
             val selectedHour = timePicker.hour
             val selectedMinute = timePicker.minute
             sendAlarmNotification(selectedHour,selectedMinute)
+            binding.alamTimeText.text = "$selectedHour : $selectedMinute"
             Toast.makeText(applicationContext,"Alarm oluşturldu!",Toast.LENGTH_SHORT).show()
         }
 
         timePicker.show(supportFragmentManager, "timePicker")
     }
     private fun sendAlarmNotification(hour : Int, minute:  Int) {
-        val reminderItem = ReminderItem(
-            time = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, hour)
-                set(Calendar.MINUTE, minute)
-            }.timeInMillis,
-            id = 1,
-        )
-        notificationAlarmScheduler.schedule(reminderItem)
+        alarmManagerExample.setAlarm(this, time = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, hour)
+            set(Calendar.MINUTE, minute)
+        }.timeInMillis)
     }
 }
